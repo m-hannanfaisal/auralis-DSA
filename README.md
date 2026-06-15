@@ -1,6 +1,5 @@
 # Auralis-DSA: Optimized Market Session Analyzer & Trade Risk Engine
 
-## Group Members
 
 
  Module 1: CandleStore (DynamicArray + Binary Search) |
