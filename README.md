@@ -1,15 +1,10 @@
 # Auralis-DSA: Optimized Market Session Analyzer & Trade Risk Engine
 
-**Course:** CS-250 — Data Structures & Algorithms  
-**Instructor:** Dr. Ayesha Hakim
-
 ## Group Members
 
-| Name | CMS | Responsibility |
-|------|-----|----------------|
-| Muntazir Mehdi | 503710 | Module 1: CandleStore (DynamicArray + Binary Search) |
-| Muhammad Hannan Faisal | 507444 | Module 2: SessionManager (AVL Tree) |
-| Muhammad Sammar Abbas | 509701 | Module 3: TradeManager (LinkedList + MaxHeap) |
+
+ Module 1: CandleStore (DynamicArray + Binary Search) |
+| Module 2: SessionManager (AVL Tree) + Module 3: TradeManager (LinkedList + MaxHeap) 
 
 ---
 
@@ -48,7 +43,7 @@ Auralis-DSA/
 
 ### Module 1: CandleStore (Dynamic Array + Binary Search)
 
-**Author:** Muntazir Mehdi (CMS: 503710)  
+  
 **File:** `dsa/candle_store.py`
 
 | Component | Description | Time Complexity |
@@ -66,7 +61,6 @@ Auralis-DSA/
 
 ### Module 2: SessionManager (AVL Tree / Balanced BST)
 
-**Author:** Muhammad Hannan Faisal (CMS: 507444)  
 **File:** `dsa/session_manager.py`
 
 | Component | Description | Time Complexity |
@@ -88,8 +82,7 @@ Auralis-DSA/
 - Right-Left Double Rotation
 
 ### Module 3: TradeManager & Risk Engine (Linked List + Max-Heap)
-
-**Author:** Muhammad Sammar Abbas (CMS: 509701)  
+ 
 **File:** `dsa/trade_manager.py`
 
 | Component | Description | Time Complexity |
@@ -199,23 +192,9 @@ Benchmarks all data structures on input sizes: **10³, 10⁴, 10⁵**
 
 ---
 
-## 8. Sample Output
 
-```
-█████████████████████████████████████████████████████████████████████
-█                                                                    █
-█       AURALIS-DSA: Optimized Market Session Analyzer               █
-█                    & Trade Risk Engine                             █
-█                                                                    █
-█            CS-250 — Data Structures & Algorithms                   █
-█               Instructor: Dr. Ayesha Hakim                         █
-█                                                                    █
-█████████████████████████████████████████████████████████████████████
 
-📚 Group Members:
-   1. Muntazir Mehdi — CMS: 503710
-   2. Muhammad Hannan Faisal — CMS: 507444
-   3. Muhammad Sammar Abbas — CMS: 509701
+
 
 ======================================================================
   MODULE 1: CandleStore (Dynamic Array + Binary Search)
@@ -284,4 +263,4 @@ All data structures are **manually implemented** without using Python's built-in
 
 ---
 
-*Auralis-DSA © 2025 | CS-250 Data Structures & Algorithms*
+*Auralis-DSA © 2025 |*
