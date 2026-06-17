@@ -1,0 +1,105 @@
+ BASELINE B — Higher Reward Target (3R), Same Signal Quality as A
+#
+# Purpose:
+#   Tests whether simply holding trades longer (targeting 3R instead of 2R)
+#   improves overall performance on the same raw signals as Baseline A.
+#   This isolates the effect of the TP level — everything else is identical to A.
+#
+# Strategy Logic:
+#   - Same signal detection as Baseline A (London session, entry + confirm flags).
+#   - Entry on next bar open (no look-ahead bias).
+#   - Stop Loss placed below signal candle low / Asia session low.
+#   - Take Profit at 3× the risk (3R) instead of 2R.
+#   - 80% of position closes at TP; runner moves SL to breakeven.
+#   - NO Asia range filter — same as Baseline A.
+#   - NO EMA bias — same as Baseline A.
+#
+# Why this config matters:
+#   A higher TP target (3R vs 2R) means:
+#     → Fewer trades reach TP (hit rate drops)
+#     → But winning trades earn more
+#   Comparing A vs B directly shows whether the signal has enough follow-through
+#   to sustain a 3R target. If B outperforms A, signals tend to run far.
+#   If B underperforms, signals frequently reverse between 2R and 3R.
+#
+# Key difference from Baseline A:
+#   RR_TARGET = 3.0  (was 2.0 in A)
+#   Everything else identical.
+#
+# Parameters set:
+#   RR_TARGET            = 3.0    → TP is 3× the initial risk
+#   USE_NEXT_BAR_ENTRY   = True   → enter at open of bar after signal
+#   USE_RETRACE_ENTRY    = False  → straight market fill, no limit order
+#   USE_EMA_BIAS         = False  → no trend filter
+#   ASIA_RANGE_MIN/MAX   = None   → no Asia session range guard
+#   LONDON_START/END     = 7, 11  → London open window only
+#   TIMEOUT_CAP_HOUR     = 20     → trade must resolve by 20:00 UTC
+#
+# Output:
+#   results/baseline_B_3R.csv
+# =============================================================================
+ 
+from pathlib import Path
+import sys
+ 
+# Add pipelines/ to path so we can import the shared backtest engine
+ROOT = Path(__file__).resolve().parent
+PIPELINES_DIR = ROOT / "pipelines"
+if str(PIPELINES_DIR) not in sys.path:
+    sys.path.append(str(PIPELINES_DIR))
+ 
+import backtest_baseline_optimized as core  # shared mechanical backtesting engine
+ 
+ 
+def run_baseline_B():
+    """
+    Configure and run Baseline B.
+ 
+    Identical to Baseline A except the TP target is raised from 2R to 3R.
+    Used to test whether the signal has enough momentum/follow-through
+    to profitably target a wider reward level.
+    """
+ 
+    # --- Risk/Reward target ---
+    # TP is placed at 3× the risk distance from entry.
+    # This is the ONLY difference from Baseline A.
+    # Trades must run 50% further than in A to hit profit.
+    core.RR_TARGET = 3.0
+ 
+    # --- Entry mode: next-bar market order ---
+    # Same as Baseline A: enter at open of bar following the signal.
+    # Eliminates look-ahead bias that would exist if entering at signal close.
+    core.USE_NEXT_BAR_ENTRY = True
+ 
+    # --- No retrace (limit) entry ---
+    # No waiting for a pullback — enter immediately at next bar open.
+    core.USE_RETRACE_ENTRY = False
+ 
+    # --- No EMA trend filter ---
+    # No directional bias; longs and shorts both allowed on signal alone.
+    core.USE_EMA_BIAS = False
+ 
+    # --- London session window ---
+    # Same as Baseline A: signals valid 07:00–11:00 UTC only.
+    core.LONDON_START = 7
+    core.LONDON_END = 11
+    core.TIMEOUT_CAP_HOUR = 20
+ 
+    # --- No Asia range guard ---
+    # Same as Baseline A: no overnight range quality check.
+    # All days traded regardless of Asia session behaviour.
+    core.ASIA_RANGE_MIN = None
+    core.ASIA_RANGE_MAX = None
+ 
+    # --- Output path ---
+    out = ROOT / "results" / "baseline_B_3R.csv"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    core.OUT = out
+ 
+    # Run the full backtest with the above configuration
+    core.main()
+ 
+ 
+if __name__ == "__main__":
+    run_baseline_B()
+ 
